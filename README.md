@@ -1,7 +1,7 @@
 FitLife Backend
 Backend de FitLife desarrollado con Node.js, Express y MongoDB para gestión de autenticación y datos de usuarios.
 Tabla de Contenidos
-
+-
 Requisitos Previos
 Instalación
 Configuración
@@ -10,7 +10,7 @@ Estructura del Proyecto
 API Endpoints
 Tecnologías Utilizadas
 Variables de Entorno
-
+-
 Requisitos Previos
 
 Node.js (versión 16 o superior)
