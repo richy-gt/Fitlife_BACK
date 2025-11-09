@@ -20,41 +20,41 @@ Backend de FitLife desarrollado con Node.js, Express y MongoDB para gestión de 
 ## Instalación
 
 Instalar las dependencias del proyecto:
-```bash
+
 npm install
-```
+
 
 Instalar Mongoose (si no se instaló automáticamente):
-```bash
+
 npm install mongoose
-```
+
 
 ## Configuración
 
 Crear un archivo .env en la raíz del proyecto con las siguientes variables:
-```env
+
 PORT=8080
 MONGO_URI=tu_string_de_conexion_mongodb
 JWT_SECRET=tu_secreto_jwt
-```
+
 
 ## Ejecución
 
 **Modo Desarrollo** con nodemon para reinicio automático:
-```bash
+
 npm run dev
-```
+
 
 **Modo Producción:**
-```bash
+
 npm start
-```
+
 
 El servidor estará disponible en http://localhost:8080
 
 ## Estructura del Proyecto
 
-```
+
 fitlife-backend/
 server.js               # Punto de entrada de la aplicación
 package.json            # Dependencias y scripts
@@ -70,14 +70,14 @@ routes/
 authRoutes.js           # Rutas de autenticación
 middleware/
 authMiddleware.js       # Middleware de autenticación JWT
-```
+
 
 ## API Endpoints
 
 ### Autenticación
 
 **Registro de Usuario**
-```
+
 POST /api/users/register
 Content-Type: application/json
 
@@ -97,10 +97,10 @@ Response:
     "email": "string"
   }
 }
-```
+
 
 **Inicio de Sesión**
-```
+
 POST /api/users/login
 Content-Type: application/json
 
@@ -120,10 +120,10 @@ Response:
   },
   "token": "string"
 }
-```
+
 
 **Obtener Perfil (Requiere Autenticación)**
-```
+
 GET /api/users/profile
 Authorization: Bearer {token}
 
@@ -136,7 +136,7 @@ Response:
     "email": "string"
   }
 }
-```
+
 
 ## Tecnologías Utilizadas
 
