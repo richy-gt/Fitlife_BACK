@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
 });
 
-// 🔒 Encriptar contraseña antes de guardar
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
         return next();
@@ -18,7 +17,6 @@ userSchema.pre("save", async function (next) {
     next();
 });
 
-// 🔑 Comparar contraseña en login
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
