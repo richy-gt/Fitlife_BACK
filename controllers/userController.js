@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+
 export const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -10,9 +11,8 @@ export const registerUser = async (req, res) => {
         if (existingUser)
             return res.status(400).json({ message: "El usuario ya está registrado." });
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newUser = new User({ name, email, password: hashedPassword });
+        // NO hasheamos aquí — el modelo lo hace automáticamente
+        const newUser = new User({ name, email, password });
         await newUser.save();
 
         res.status(201).json({
@@ -31,11 +31,12 @@ export const loginUser = async (req, res) => {
 
         const user = await User.findOne({ email });
         if (!user)
-            return res.status(401).json({ message: "Usuario no encontrado" }); // ← CORREGIDO
+            return res.status(401).json({ message: "Usuario no encontrado" });
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        // Usamos el método del modelo
+        const isMatch = await user.matchPassword(password);
         if (!isMatch)
-            return res.status(401).json({ message: "Contraseña incorrecta" }); // ← CORREGIDO
+            return res.status(401).json({ message: "Contraseña incorrecta" });
 
         const token = jwt.sign(
             { id: user._id, email: user.email },
@@ -54,6 +55,7 @@ export const loginUser = async (req, res) => {
         res.status(500).json({ message: "Error al iniciar sesión" });
     }
 };
+
 
 export const getProfile = async (req, res) => {
     try {
