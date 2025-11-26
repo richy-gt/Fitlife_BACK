@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-
 export const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -26,16 +25,17 @@ export const registerUser = async (req, res) => {
     }
 };
 
-
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: "Usuario no encontrado" });
+        if (!user)
+            return res.status(401).json({ message: "Usuario no encontrado" }); // ← CORREGIDO
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: "Contraseña incorrecta" });
+        if (!isMatch)
+            return res.status(401).json({ message: "Contraseña incorrecta" }); // ← CORREGIDO
 
         const token = jwt.sign(
             { id: user._id, email: user.email },
@@ -48,19 +48,24 @@ export const loginUser = async (req, res) => {
             user: { id: user._id, name: user.name, email: user.email },
             token,
         });
+
     } catch (error) {
         console.error("❌ Error en login:", error);
         res.status(500).json({ message: "Error al iniciar sesión" });
     }
 };
 
-
 export const getProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select("-password");
-        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+        if (!user)
+            return res.status(404).json({ message: "Usuario no encontrado" });
 
-        res.json({ message: "Perfil de usuario obtenido con éxito", user });
+        res.json({
+            message: "Perfil de usuario obtenido con éxito",
+            user
+        });
+
     } catch (error) {
         console.error("❌ Error al obtener perfil:", error);
         res.status(500).json({ message: "Error del servidor" });
