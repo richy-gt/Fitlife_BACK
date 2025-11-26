@@ -20,7 +20,7 @@ export const registerUser = async (req, res) => {
             user: { id: newUser._id, name: newUser.name, email: newUser.email },
         });
     } catch (error) {
-        console.error("❌ Error en registro:", error);
+        console.error(" Error en registro:", error);
         res.status(500).json({ message: "Error al registrar usuario" });
     }
 };
@@ -50,7 +50,7 @@ export const loginUser = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("❌ Error en login:", error);
+        console.error(" Error en login:", error);
         res.status(500).json({ message: "Error al iniciar sesión" });
     }
 };
@@ -67,7 +67,7 @@ export const getProfile = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("❌ Error al obtener perfil:", error);
+        console.error(" Error al obtener perfil:", error);
         res.status(500).json({ message: "Error del servidor" });
     }
 };
